@@ -1,0 +1,98 @@
+[
+ {
+  "site": "bild.de",
+  "condition": "Agent A",
+  "visits": 4,
+  "avg_bids": 0,
+  "median_cpm_eur": null,
+  "avg_advertisers": 0
+ },
+ {
+  "site": "bild.de",
+  "condition": "Agent B",
+  "visits": 4,
+  "avg_bids": 0,
+  "median_cpm_eur": null,
+  "avg_advertisers": 0
+ },
+ {
+  "site": "bild.de",
+  "condition": "Agent C",
+  "visits": 4,
+  "avg_bids": 0,
+  "median_cpm_eur": null,
+  "avg_advertisers": 0
+ },
+ {
+  "site": "bild.de",
+  "condition": "Baseline",
+  "visits": 4,
+  "avg_bids": 0,
+  "median_cpm_eur": null,
+  "avg_advertisers": 0
+ },
+ {
+  "site": "chip.de",
+  "condition": "Agent A",
+  "visits": 4,
+  "avg_bids": 17.3,
+  "median_cpm_eur": 2.07,
+  "avg_advertisers": 11
+ },
+ {
+  "site": "chip.de",
+  "condition": "Agent B",
+  "visits": 4,
+  "avg_bids": 22.3,
+  "median_cpm_eur": 2.06,
+  "avg_advertisers": 10.5
+ },
+ {
+  "site": "chip.de",
+  "condition": "Agent C",
+  "visits": 4,
+  "avg_bids": 20.5,
+  "median_cpm_eur": 1.93,
+  "avg_advertisers": 12
+ },
+ {
+  "site": "chip.de",
+  "condition": "Baseline",
+  "visits": 4,
+  "avg_bids": 16.5,
+  "median_cpm_eur": 1.83,
+  "avg_advertisers": 10.8
+ },
+ {
+  "site": "tagesspiegel.de",
+  "condition": "Agent A",
+  "visits": 5,
+  "avg_bids": 10.2,
+  "median_cpm_eur": 1.12,
+  "avg_advertisers": 6.8
+ },
+ {
+  "site": "tagesspiegel.de",
+  "condition": "Agent B",
+  "visits": 5,
+  "avg_bids": 11,
+  "median_cpm_eur": 0.95,
+  "avg_advertisers": 6.6
+ },
+ {
+  "site": "tagesspiegel.de",
+  "condition": "Agent C",
+  "visits": 5,
+  "avg_bids": 12.4,
+  "median_cpm_eur": 1.09,
+  "avg_advertisers": 6
+ },
+ {
+  "site": "tagesspiegel.de",
+  "condition": "Baseline",
+  "visits": 15,
+  "avg_bids": 5.8,
+  "median_cpm_eur": 0.84,
+  "avg_advertisers": 3.7
+ }
+]

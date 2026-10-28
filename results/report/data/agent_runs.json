@@ -1,0 +1,167 @@
+[
+ {
+  "run_label": "agent_A_run1",
+  "variant": "A",
+  "run": 1,
+  "cookie_decision": "not recorded",
+  "cookies": 25,
+  "pages_visited": "",
+  "sites_visited": "",
+  "visited_shops_that_bid": "(no transcript)",
+  "mode": "interactive"
+ },
+ {
+  "run_label": "agent_B_run1",
+  "variant": "B",
+  "run": 1,
+  "cookie_decision": "not recorded",
+  "cookies": 464,
+  "pages_visited": "",
+  "sites_visited": "",
+  "visited_shops_that_bid": "(no transcript)",
+  "mode": "interactive"
+ },
+ {
+  "run_label": "agent_C_run1",
+  "variant": "C",
+  "run": 1,
+  "cookie_decision": "not recorded",
+  "cookies": 29,
+  "pages_visited": "",
+  "sites_visited": "",
+  "visited_shops_that_bid": "(no transcript)",
+  "mode": "interactive"
+ },
+ {
+  "run_label": "agent_A_run2",
+  "variant": "A",
+  "run": 2,
+  "cookie_decision": "no banner clicked",
+  "cookies": 26,
+  "pages_visited": 7,
+  "sites_visited": "bergfreunde.de, decathlon.de, idealo.de, runnersworld.de",
+  "visited_shops_that_bid": "",
+  "mode": "headless (overnight)"
+ },
+ {
+  "run_label": "agent_B_run2",
+  "variant": "B",
+  "run": 2,
+  "cookie_decision": "accepted",
+  "cookies": 369,
+  "pages_visited": 7,
+  "sites_visited": "bergfreunde.de, decathlon.de, idealo.de, runnersworld.de",
+  "visited_shops_that_bid": "",
+  "mode": "headless (overnight)"
+ },
+ {
+  "run_label": "agent_C_run2",
+  "variant": "C",
+  "run": 2,
+  "cookie_decision": "rejected",
+  "cookies": 23,
+  "pages_visited": 8,
+  "sites_visited": "bergfreunde.de, idealo.de, runnersworld.de",
+  "visited_shops_that_bid": "",
+  "mode": "headless (overnight)"
+ },
+ {
+  "run_label": "agent_A_run3",
+  "variant": "A",
+  "run": 3,
+  "cookie_decision": "no banner clicked",
+  "cookies": 13,
+  "pages_visited": 9,
+  "sites_visited": "idealo.de, runnersworld.de",
+  "visited_shops_that_bid": "",
+  "mode": "headless (overnight)"
+ },
+ {
+  "run_label": "agent_B_run3",
+  "variant": "B",
+  "run": 3,
+  "cookie_decision": "no banner clicked",
+  "cookies": 21,
+  "pages_visited": 8,
+  "sites_visited": "bergfreunde.de, idealo.de, runnersworld.de",
+  "visited_shops_that_bid": "",
+  "mode": "headless (overnight)"
+ },
+ {
+  "run_label": "agent_C_run3",
+  "variant": "C",
+  "run": 3,
+  "cookie_decision": "rejected",
+  "cookies": 26,
+  "pages_visited": 7,
+  "sites_visited": "idealo.de, runnersworld.de, sportscheck.com",
+  "visited_shops_that_bid": "",
+  "mode": "headless (overnight)"
+ },
+ {
+  "run_label": "agent_A_run4",
+  "variant": "A",
+  "run": 4,
+  "cookie_decision": "rejected",
+  "cookies": 35,
+  "pages_visited": 9,
+  "sites_visited": "bergfreunde.de, idealo.de, runnersworld.de, sportscheck.com",
+  "visited_shops_that_bid": "",
+  "mode": "headless (overnight)"
+ },
+ {
+  "run_label": "agent_B_run4",
+  "variant": "B",
+  "run": 4,
+  "cookie_decision": "accepted",
+  "cookies": 445,
+  "pages_visited": 8,
+  "sites_visited": "idealo.de, runnersworld.de",
+  "visited_shops_that_bid": "",
+  "mode": "headless (overnight)"
+ },
+ {
+  "run_label": "agent_C_run4",
+  "variant": "C",
+  "run": 4,
+  "cookie_decision": "rejected",
+  "cookies": 16,
+  "pages_visited": 10,
+  "sites_visited": "idealo.de, runmarkt.de, runnersworld.de",
+  "visited_shops_that_bid": "",
+  "mode": "headless (overnight)"
+ },
+ {
+  "run_label": "agent_A_run5",
+  "variant": "A",
+  "run": 5,
+  "cookie_decision": "rejected",
+  "cookies": 32,
+  "pages_visited": 9,
+  "sites_visited": "bergfreunde.de, decathlon.de, idealo.de, runnersworld.de, testberichte.de",
+  "visited_shops_that_bid": "",
+  "mode": "headless (overnight)"
+ },
+ {
+  "run_label": "agent_B_run5",
+  "variant": "B",
+  "run": 5,
+  "cookie_decision": "no banner clicked",
+  "cookies": 24,
+  "pages_visited": 6,
+  "sites_visited": "idealo.de, runnersworld.de, sportscheck.com",
+  "visited_shops_that_bid": "",
+  "mode": "headless (overnight)"
+ },
+ {
+  "run_label": "agent_C_run5",
+  "variant": "C",
+  "run": 5,
+  "cookie_decision": "rejected",
+  "cookies": 26,
+  "pages_visited": 7,
+  "sites_visited": "idealo.de, runnersworld.de, sportscheck.com",
+  "visited_shops_that_bid": "",
+  "mode": "headless (overnight)"
+ }
+]

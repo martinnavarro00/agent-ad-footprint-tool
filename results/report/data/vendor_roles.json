@@ -1,0 +1,90 @@
+[
+ {
+  "vendor": "Amazon TAM / UAM",
+  "role": "header-bidding"
+ },
+ {
+  "vendor": "Google Ad Manager (GPT)",
+  "role": "ad-server"
+ },
+ {
+  "vendor": "Google AdSense",
+  "role": "ad-network"
+ },
+ {
+  "vendor": "Taboola",
+  "role": "native"
+ },
+ {
+  "vendor": "Outbrain",
+  "role": "native"
+ },
+ {
+  "vendor": "Plista",
+  "role": "native"
+ },
+ {
+  "vendor": "Criteo",
+  "role": "exchange"
+ },
+ {
+  "vendor": "Xandr / Microsoft (AppNexus)",
+  "role": "exchange"
+ },
+ {
+  "vendor": "Magnite (Rubicon)",
+  "role": "exchange"
+ },
+ {
+  "vendor": "PubMatic",
+  "role": "exchange"
+ },
+ {
+  "vendor": "Index Exchange",
+  "role": "exchange"
+ },
+ {
+  "vendor": "OpenX",
+  "role": "exchange"
+ },
+ {
+  "vendor": "Equativ (Smart AdServer)",
+  "role": "exchange"
+ },
+ {
+  "vendor": "Yieldlab",
+  "role": "exchange"
+ },
+ {
+  "vendor": "Adform",
+  "role": "exchange"
+ },
+ {
+  "vendor": "Teads",
+  "role": "exchange"
+ },
+ {
+  "vendor": "Seedtag",
+  "role": "exchange"
+ },
+ {
+  "vendor": "Google DV360 / ad delivery",
+  "role": "exchange"
+ },
+ {
+  "vendor": "Meta Pixel",
+  "role": "tracking"
+ },
+ {
+  "vendor": "Google Ads conversion / remarketing",
+  "role": "tracking"
+ },
+ {
+  "vendor": "TikTok Pixel",
+  "role": "tracking"
+ },
+ {
+  "vendor": "Microsoft Ads (UET)",
+  "role": "tracking"
+ }
+]

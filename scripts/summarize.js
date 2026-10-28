@@ -55,13 +55,15 @@ function main() {
   // Re-summarize from raw bids so old and new records are treated identically.
   const rows = records.map((r) => {
     const after = summarize(dedupe(r.bids.filter((b) => b.phase === 'after')));
-    return { ...r, after };
+    const site = new URL(r.url).hostname.replace(/^www\./, '');
+    return { ...r, site, after };
   });
 
   report.log('\nVisits (after consent)');
   report.table(
     rows.map((r) => ({
       timeUtc: r.timestamp.slice(0, 16).replace('T', ' '),
+      site: r.site,
       condition: r.condition,
       label: r.label,
       run: r.run,
@@ -73,12 +75,15 @@ function main() {
     })),
   );
 
-  const conditions = [...new Set(rows.map((r) => r.condition))];
-  report.log('Per condition (each visit counts once)');
+  // One row per news site and condition (bids differ a lot between sites).
+  const groups = [...new Set(rows.map((r) => `${r.site}|${r.condition}`))].sort();
+  report.log('Per site and condition (each visit counts once)');
   report.table(
-    conditions.map((condition) => {
-      const group = rows.filter((r) => r.condition === condition);
+    groups.map((key) => {
+      const [site, condition] = key.split('|');
+      const group = rows.filter((r) => r.site === site && r.condition === condition);
       return {
+        site,
         condition,
         visits: group.length,
         avgBids: avg(group.map((r) => r.after.bids)),
@@ -88,6 +93,7 @@ function main() {
     }),
   );
 
+  // Conservative: an advertiser counts as "agent only" if it never bid on ANY baseline visit, on any site.
   const baselineAdvertisers = new Set(
     rows.filter((r) => r.condition.startsWith('baseline')).flatMap((r) => r.after.advertisers),
   );
@@ -96,7 +102,7 @@ function main() {
     for (const adv of r.after.advertisers) {
       if (baselineAdvertisers.has(adv)) continue;
       if (!onlyAgent.has(adv)) onlyAgent.set(adv, []);
-      onlyAgent.get(adv).push(r.label);
+      onlyAgent.get(adv).push(`${r.label} @ ${r.site}`);
     }
   }
 

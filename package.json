@@ -12,6 +12,10 @@
     "agent:setup": "node scripts/agent-setup.js",
     "profile:copy": "node scripts/copy-profile.js",
     "summarize": "node scripts/summarize.js",
+    "overnight": "node scripts/overnight.js",
+    "report": "node scripts/report.js",
+    "prevalence": "node scripts/prevalence.js",
+    "prevalence:summary": "node scripts/prevalence.js --summary",
     "summarize:pilot": "node scripts/summarize.js --file data/pilot-2026-10-19/measurements.jsonl --shops sportscheck.com,intersport.de,idealo.de,amazon.de,zalando.de",
     "test": "node --test"
   },

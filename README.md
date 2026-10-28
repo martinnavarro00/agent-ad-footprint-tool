@@ -82,6 +82,29 @@ banners, interventions).
 Measuring visits Tagesspiegel and adds cookies, so we always measure `_copy`. To measure the same run
 again later, make a fresh copy with `npm run profile:copy -- profiles/agent_A_run1 --force`.
 
+### 2b. Unattended agent runs (e.g. overnight)
+
+`npm run overnight` repeats step 2 automatically: per round it runs every variant (A, B, C), each
+with a fresh profile, Claude Code in non-interactive mode (`claude -p`, only the Playwright browser
+tools allowed; web search and shell are refused), copies the profile and measures it on each site,
+then takes one baseline visit per site in the same time window. Run numbers continue automatically.
+
+```bash
+npm run overnight -- --dry-run                 # show the plan, run nothing
+caffeinate -dimsu npm run overnight -- --rounds 4
+```
+
+Defaults: 4 rounds, variants A,B,C, and the sites in `DEFAULT_SITES` at the top of
+`scripts/overnight.js`. Only use sites where the prevalence crawl found Prebid **and** clicked the
+cookie banner, otherwise the measurement records no bids. Change with `--rounds`, `--variants`, `--sites url1,url2,url3`, `--agent-timeout <min>`.
+One round takes about 45 minutes. `caffeinate` keeps the Mac awake: leave it plugged in with the lid
+open. Progress goes to `results/overnight_log.jsonl`, including each run's **cookie decision**
+(accepted / rejected / mixed / no banner clicked), taken from the agent's actual clicks, not its own
+report. Per run, `agent_output/<label>/` holds `transcript.jsonl` (every message and tool call),
+`actions.json` (pages visited, cookie-banner clicks) and `claude_result.json` (final answer, cost). Agent runs use your Claude plan; if a usage limit is
+reached, the remaining runs fail and are logged, and the script carries on with the baselines.
+Fill in the run log in `docs/protocol.md` afterwards from these files.
+
 ### 3. Compare
 
 ```bash
@@ -90,6 +113,57 @@ npm run summarize -- --shops sportscheck.com,intersport.de,idealo.de,amazon.de,z
 
 `--save` also writes the output to `results/summary_<date>_<time>.txt` (leave it out to only print). This prints one row per visit, the averages per condition, and the advertisers that bid **only** on
 agent profiles (candidate retargeting). Shops the agent visited are flagged.
+
+### 4. How many commonly used sites use Prebid, and what do the others use? (ad-tech crawl)
+
+Our measurement reads Prebid.js auctions, so it matters how common Prebid is and what sites use
+instead. This crawler visits the homepage of every site in a list and records, per site:
+
+- **Prebid** (found before or only after accepting the cookie banner, and which bidders)
+- **other ad tech the page loads**: Google Ad Manager, Google AdSense, Amazon TAM, native widgets
+  (Taboola, Outbrain, Plista), ad exchanges (Criteo, PubMatic, Xandr…), and ad-tracking pixels
+  (Meta, Google Ads, TikTok, Microsoft)
+- **ads.txt**: whether the site publishes a list of authorised ad sellers (= it sells ads)
+- **one label for how the site shows ads**, e.g. "Prebid", "Google Ad Manager only", "Native widgets
+  only", "No third-party ad tech detected"
+
+No agent involved. Use the **CrUX list** (sites real Chrome users visit, also available for Germany);
+see `data/lists/README.md` for where to get it.
+
+```bash
+npm run prevalence -- --list data/lists/crux_de.csv --top 1000 --exclude-adult   # top 1000 sites in Germany
+npm run prevalence -- --list data/lists/crux_global.csv --top 1000 --exclude-adult
+npm run prevalence:summary                                        # print the summary again
+```
+
+About 1,000 sites take roughly 1 hour with the default 4 sites in parallel (`--concurrency`). Results
+go to `results/prevalence.jsonl`, one line per site, written immediately: you can stop with Ctrl+C
+and re-run the same command to continue. Use a different `--out` file per list. The summary shows how
+sites show ads, the share of sites with ad tech / ads.txt / Prebid, the most common vendors, results
+by popularity rank, and the most common Prebid bidders. Add `--headed` to watch.
+
+`--exclude-adult` skips adult and malware sites before visiting them: it asks Cloudflare for Families
+(the 1.1.1.3 family-safe DNS) whether a domain is blocked, plus a keyword check on the domain name.
+Skipped sites are neither visited nor saved in the results; the crawl prints how many were skipped.
+
+Limitations: homepages only (some sites run ads only on article pages: pass a list of article URLs
+for those); first-party ad systems (e.g. Amazon's or eBay's own sponsored products) are not detected;
+headless Chrome can be blocked by some sites; results depend on the country you crawl from (consent
+rules), so note where you ran it. The vendor list is in `src/detectAdTech.js` and can be extended.
+
+### 5. Results report (charts and tables for the group)
+
+```bash
+npm run report
+open results/report/index.html
+```
+
+Builds a self-contained page from everything in `results/`: Prebid prevalence per crawl list, how sites
+without Prebid show ads, a searchable table of all crawled sites, the agents' cookie decisions, bids per
+news site and condition, and the agent runs with their retargeting check. Re-run it after every crawl or
+overnight run and commit `results/report/` so the group always sees the latest numbers. The same tables
+are written to `results/report/data/*.json`, which is what the online dashboard reads. The page design
+lives in `src/report-template.html`, the calculations in `src/report.js` (unit-tested).
 
 ### Rules that keep runs comparable
 
@@ -110,10 +184,14 @@ a config block for **Claude Desktop** (paste it into
 
 | Command | What it does |
 |---|---|
+| `npm run overnight -- [--rounds N] [--dry-run]` | unattended agent runs + measurements + baselines |
 | `npm run measure -- --help` | all measurement options: `--consent accept\|reject\|skip`, `--headless`, `--url`, `--note`, `--channel` |
 | `npm run agent:setup -- <label>` | prepares one agent run |
 | `npm run profile:copy -- <profile> [--force]` | copies an agent profile for measuring |
 | `npm run summarize [-- --file <jsonl>] [--save]` | compares conditions; `--save` writes a text file to `results/` |
+| `npm run prevalence -- --list <file>` | crawls a list of sites for Prebid and other ad tech (`--top`, `--tld`, `--exclude-adult`, `--concurrency`, `--headed`, `--out`) |
+| `npm run prevalence:summary` | summary of the crawl results |
+| `npm run report` | rebuilds the results report in `results/report/` |
 | `npm test` | unit tests |
 
 ### Troubleshooting
@@ -136,12 +214,19 @@ src/
   prebid.js        code that runs inside the page: hooks Prebid events, reads auction state
   bidStore.js      removes duplicate bids and computes the statistics (unit-tested)
   consent.js       finds and clicks the cookie-banner button (main page + iframes)
+  agentTranscript.js  reads an agent transcript: pages visited, cookie clicks, decision (unit-tested)
+  report.js        aggregations for the results report (unit-tested)
+  report-template.html  design of the results report page
   measure.js       one measurement visit; reading and writing result files
+  detectAdTech.js  detects Prebid and other ad-tech vendors; labels how a site shows ads
 scripts/
   measure.js       CLI: baseline / agent measurement
   agent-setup.js   CLI: prepare profile + MCP config for an agent run
   copy-profile.js  CLI: safe copy of an agent profile (refuses while Chrome is open)
   summarize.js     CLI: compare conditions
+  overnight.js     CLI: unattended agent runs (setup, claude -p, copy, measure, baselines)
+  report.js        CLI: builds the results report (results/report/)
+  prevalence.js    CLI: crawl a list of websites for Prebid and other ad tech
 test/              node:test unit tests
 docs/protocol.md   agent prompts, run procedure, run log
 data/pilot-2026-10-19/   pilot results (converted) + original files + notes
